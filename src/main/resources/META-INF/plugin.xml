@@ -1,0 +1,20 @@
+<idea-plugin>
+    <id>io.ritely.intellij</id>
+    <name>Rite Language</name>
+
+    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
+    <vendor url="https://ritely.io">Ritely</vendor>
+
+    <description><![CDATA[
+        Language Server Protocol support for Rite ceremony files.
+    ]]></description>
+
+    <depends>com.intellij.modules.platform</depends>
+    <depends>com.intellij.modules.lsp</depends>
+    <depends>org.jetbrains.plugins.yaml</depends>
+
+    <extensions defaultExtensionNs="com.intellij">
+        <platform.lsp.serverSupportProvider implementation="io.ritely.RiteLspServerSupportProvider"/>
+    </extensions>
+
+</idea-plugin>
