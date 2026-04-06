@@ -3,7 +3,7 @@
     <name>Rite Language</name>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-    <vendor url="https://ritely.io">Ritely</vendor>
+    <vendor url="https://ritely.io">rite-ly</vendor>
 
     <description><![CDATA[
         Language Server Protocol support for Rite ceremony files.
