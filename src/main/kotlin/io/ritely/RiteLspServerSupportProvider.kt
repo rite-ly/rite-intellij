@@ -52,7 +52,7 @@ class RiteLspServerDescriptor(project: Project) : ProjectWideLspServerDescriptor
     }
 
     private fun extractBinary(resourcePath: String): Path {
-        val tempDir = PathManager.getSystemDir().resolve("io.ritely.intellij")
+        val tempDir = PathManager.getSystemDir().resolve("io.ritely.rite")
         Files.createDirectories(tempDir)
 
         val targetPath = tempDir.resolve("rite-ls")

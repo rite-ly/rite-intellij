@@ -1,5 +1,5 @@
 <idea-plugin>
-    <id>io.ritely.intellij</id>
+    <id>io.ritely.rite</id>
     <name>Rite Language</name>
 
     <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
