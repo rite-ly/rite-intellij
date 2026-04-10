@@ -1,5 +1,5 @@
 [versions]
-intellijPlatform = "2.13.1"
+intellijPlatform = "2.14.0"
 kotlin = "2.3.20"
 
 [libraries]
