@@ -10,8 +10,9 @@ import com.intellij.util.system.CpuArch
 import com.intellij.util.system.OS
 import java.nio.file.Files
 import java.nio.file.Path
-import java.nio.file.StandardCopyOption
 import java.nio.file.attribute.PosixFilePermission
+import java.security.MessageDigest
+import java.util.*
 import kotlin.io.path.absolutePathString
 
 private fun VirtualFile.isRiteFile() =
@@ -39,30 +40,40 @@ class RiteLspServerDescriptor(project: Project) : ProjectWideLspServerDescriptor
     }
 
     private fun getBinaryPath(): String? {
-        val platform = when (OS.CURRENT) {
-            OS.Linux if CpuArch.CURRENT == CpuArch.ARM64 -> "linux-arm64"
-            OS.Linux if CpuArch.CURRENT == CpuArch.X86_64 -> "linux-x86_64"
-            OS.macOS if CpuArch.CURRENT == CpuArch.ARM64 -> "darwin-arm64"
-            OS.macOS if CpuArch.CURRENT == CpuArch.X86_64 && CpuArch.isEmulated() -> "darwin-arm64"
-            OS.macOS if CpuArch.CURRENT == CpuArch.X86_64 -> "darwin-x86_64"
-            else -> return null
+        when (OS.CURRENT) {
+            OS.Linux if CpuArch.CURRENT == CpuArch.ARM64 ->
+                return "/bin/linux-arm64/rite-ls"
+            OS.Linux if CpuArch.CURRENT == CpuArch.X86_64 ->
+                return "/bin/linux-x86_64/rite-ls"
+            OS.macOS if CpuArch.CURRENT == CpuArch.ARM64 ->
+                return "/bin/darwin-arm64/rite-ls"
+            OS.macOS if CpuArch.CURRENT == CpuArch.X86_64 && CpuArch.isEmulated() ->
+                return "/bin/darwin-arm64/rite-ls"
+            OS.macOS if CpuArch.CURRENT == CpuArch.X86_64 ->
+                return "/bin/darwin-x86_64/rite-ls"
+            OS.Windows if CpuArch.CURRENT == CpuArch.X86_64 ->
+                return "/bin/windows-x86_64/rite-ls.exe"
+            else ->
+                return null
         }
-
-        return "/binaries/$platform/rite-ls"
     }
 
     private fun extractBinary(resourcePath: String): Path {
         val tempDir = PathManager.getSystemDir().resolve("io.ritely.rite")
         Files.createDirectories(tempDir)
 
-        val targetPath = tempDir.resolve("rite-ls")
+        val targetPath = tempDir.resolve(resourcePath.substringAfterLast('/'))
 
-        // TODO improve the logic to detect if file has changed or not
-        if (!Files.exists(targetPath) || Files.size(targetPath) == 0L) {
+        val resourceBytes = javaClass.getResourceAsStream(resourcePath)
+            ?.use { it.readBytes() }
+            ?: throw RuntimeException("Binary resource not found: $resourcePath")
+
+        val upToDate = Files.exists(targetPath) &&
+                sha256(resourceBytes) == sha256(Files.readAllBytes(targetPath))
+
+        if (!upToDate) {
             LOG.info("Rite LSP: extracting binary from resource: $resourcePath")
-            val input = javaClass.getResourceAsStream(resourcePath)
-                ?: throw RuntimeException("Binary resource not found: $resourcePath")
-            input.use { Files.copy(it, targetPath, StandardCopyOption.REPLACE_EXISTING) }
+            Files.write(targetPath, resourceBytes)
 
             if (OS.CURRENT != OS.Windows) {
                 try {
@@ -77,4 +88,7 @@ class RiteLspServerDescriptor(project: Project) : ProjectWideLspServerDescriptor
 
         return targetPath
     }
+
+    private fun sha256(bytes: ByteArray): String =
+        HexFormat.of().formatHex(MessageDigest.getInstance("SHA-256").digest(bytes))
 }
