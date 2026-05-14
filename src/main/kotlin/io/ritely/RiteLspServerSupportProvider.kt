@@ -34,8 +34,10 @@ class RiteLspServerDescriptor(project: Project) : ProjectWideLspServerDescriptor
     override fun isSupportedFile(file: VirtualFile) = file.isRiteFile()
 
     override fun createCommandLine() = GeneralCommandLine().apply {
-        val binaryPath = getBinaryPath() ?: throw RuntimeException("Unsupported OS or architecture for Rite LSP")
-        val executable = extractBinary(binaryPath)
+        val executable = RiteSettings.getInstance().customServerPath() ?: run {
+            val binaryPath = getBinaryPath() ?: throw RuntimeException("Unsupported OS or architecture for Rite LSP")
+            extractBinary(binaryPath)
+        }
         withExePath(executable.absolutePathString())
     }
 
@@ -43,16 +45,22 @@ class RiteLspServerDescriptor(project: Project) : ProjectWideLspServerDescriptor
         when (OS.CURRENT) {
             OS.Linux if CpuArch.CURRENT == CpuArch.ARM64 ->
                 return "/bin/linux-arm64/rite-ls"
+
             OS.Linux if CpuArch.CURRENT == CpuArch.X86_64 ->
                 return "/bin/linux-x86_64/rite-ls"
+
             OS.macOS if CpuArch.CURRENT == CpuArch.ARM64 ->
                 return "/bin/darwin-arm64/rite-ls"
+
             OS.macOS if CpuArch.CURRENT == CpuArch.X86_64 && CpuArch.isEmulated() ->
                 return "/bin/darwin-arm64/rite-ls"
+
             OS.macOS if CpuArch.CURRENT == CpuArch.X86_64 ->
                 return "/bin/darwin-x86_64/rite-ls"
+
             OS.Windows if CpuArch.CURRENT == CpuArch.X86_64 ->
                 return "/bin/windows-x86_64/rite-ls.exe"
+
             else ->
                 return null
         }

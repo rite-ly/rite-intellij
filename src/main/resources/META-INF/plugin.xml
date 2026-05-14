@@ -2,11 +2,27 @@
     <id>io.ritely.rite</id>
     <name>Rite Language</name>
 
-    <!-- A displayed Vendor name or Organization ID displayed on the Plugins Page. -->
-    <vendor url="https://ritely.io">rite-ly</vendor>
+    <vendor url="https://ritely.io" email="contact@ritely.io">rite-ly</vendor>
 
     <description><![CDATA[
-        Language Server Protocol support for Rite ceremony files.
+        <p>
+          Language support for <a href="https://github.com/rite-ly/rite">Rite</a> ceremony files
+          (<code>*.rite.yaml</code>), powered by a bundled language server.
+        </p>
+        <ul>
+          <li>Diagnostics (errors and warnings)</li>
+          <li>Hover information</li>
+          <li>Completions</li>
+        </ul>
+        <p>
+          Rite is a DSL and runtime for cryptographic key ceremonies. Learn more at
+          <a href="https://ritely.io">ritely.io</a>.
+        </p>
+        <p>
+          The plugin bundles the <code>rite-ls</code> binary for macOS (Apple Silicon and Intel),
+          Linux (x64 and ARM64), and Windows (x64). A custom binary can be configured under
+          <b>Settings | Languages &amp; Frameworks | Rite</b>.
+        </p>
     ]]></description>
 
     <depends>com.intellij.modules.platform</depends>
@@ -15,6 +31,12 @@
 
     <extensions defaultExtensionNs="com.intellij">
         <platform.lsp.serverSupportProvider implementation="io.ritely.RiteLspServerSupportProvider"/>
+        <applicationService serviceImplementation="io.ritely.RiteSettings"/>
+        <applicationConfigurable
+                parentId="language"
+                id="io.ritely.settings"
+                displayName="Rite"
+                instance="io.ritely.RiteConfigurable"/>
     </extensions>
 
 </idea-plugin>
