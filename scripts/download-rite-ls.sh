@@ -44,8 +44,8 @@ place() {
 
 place "darwin-arm64"     "src/main/resources/bin/darwin-arm64/rite-ls"
 place "darwin-amd64"     "src/main/resources/bin/darwin-x86_64/rite-ls"
-place "linux-arm64-musl" "src/main/resources/bin/linux-arm64/rite-ls"
-place "linux-amd64-musl" "src/main/resources/bin/linux-x86_64/rite-ls"
+place "linux-arm64"      "src/main/resources/bin/linux-arm64/rite-ls"
+place "linux-amd64"      "src/main/resources/bin/linux-x86_64/rite-ls"
 place "windows-amd64"    "src/main/resources/bin/windows-x86_64/rite-ls.exe"
 
 echo "Done."
