@@ -3,7 +3,7 @@
   "customManagers": [
     {
       "customType": "regex",
-      "managerFilePatterns": ["^gradle\\.properties$"],
+      "managerFilePatterns": ["gradle.properties"],
       "matchStrings": ["riteLsVersion=(?<currentValue>[^\\n]+)"],
       "depNameTemplate": "rite-ls",
       "packageNameTemplate": "rite-ly/rite",
