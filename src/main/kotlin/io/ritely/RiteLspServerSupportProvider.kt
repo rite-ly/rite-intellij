@@ -6,6 +6,9 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.vfs.VirtualFile
 import com.intellij.platform.lsp.api.LspServerSupportProvider
 import com.intellij.platform.lsp.api.ProjectWideLspServerDescriptor
+import com.intellij.platform.lsp.api.customization.LspCustomization
+import com.intellij.platform.lsp.api.customization.LspSemanticTokensSupport
+import com.intellij.psi.PsiFile
 import com.intellij.util.system.CpuArch
 import com.intellij.util.system.OS
 import java.nio.file.Files
@@ -32,6 +35,17 @@ class RiteLspServerSupportProvider : LspServerSupportProvider {
 
 class RiteLspServerDescriptor(project: Project) : ProjectWideLspServerDescriptor(project, "Rite") {
     override fun isSupportedFile(file: VirtualFile) = file.isRiteFile()
+
+    override val lspCustomization: LspCustomization = object : LspCustomization() {
+        override val semanticTokensCustomizer = object : LspSemanticTokensSupport() {
+            // The default returns true only for "TEXT" / "textmate" languages,
+            // assuming other languages have first-class PSI-based highlighting.
+            // Ceremony files are recognised as YAML by the IDE, so without this
+            // override the server is never asked for semantic tokens.
+            override fun shouldAskServerForSemanticTokens(psiFile: PsiFile): Boolean =
+                psiFile.virtualFile?.isRiteFile() == true
+        }
+    }
 
     override fun createCommandLine() = GeneralCommandLine().apply {
         val executable = RiteSettings.getInstance().customServerPath() ?: run {
