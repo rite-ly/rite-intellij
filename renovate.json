@@ -8,6 +8,7 @@
       "depNameTemplate": "rite-ls",
       "packageNameTemplate": "rite-ly/rite",
       "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v(?<version>.+)$",
       "autoReplaceStringTemplate": "riteLsVersion={{{newValue}}}"
     }
   ],
