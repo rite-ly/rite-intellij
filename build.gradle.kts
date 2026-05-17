@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "io.ritely"
-version = "0.1.0"
+version = "0.1.1-SNAPSHOT"
 
 kotlin {
     jvmToolchain(21)
