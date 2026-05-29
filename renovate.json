@@ -12,9 +12,14 @@
       "autoReplaceStringTemplate": "riteLsVersion={{{newValue}}}"
     }
   ],
-  "postUpgradeTasks": {
-    "commands": ["scripts/download-rite-ls.sh {{{newVersion}}}"],
-    "fileFilters": ["src/main/resources/bin/**"],
-    "executionMode": "branch"
-  }
+  "packageRules": [
+    {
+      "matchPackageNames": ["rite-ly/rite"],
+      "postUpgradeTasks": {
+        "commands": ["scripts/download-rite-ls.sh {{{newVersion}}}"],
+        "fileFilters": ["src/main/resources/bin/**"],
+        "executionMode": "update"
+      }
+    }
+  ]
 }
