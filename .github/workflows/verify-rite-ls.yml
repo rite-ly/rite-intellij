@@ -1,0 +1,22 @@
+name: Verify rite-ls
+
+# Only runs when the bundled binaries change (e.g. the Renovate version bump),
+# so ordinary code PRs don't pay for a network verification round-trip.
+on:
+  pull_request:
+    branches: [main]
+    paths: ['src/main/resources/bin/**']
+  push:
+    branches: [main]
+    paths: ['src/main/resources/bin/**']
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    name: Verify rite-ls provenance
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6
+      - uses: ./.github/actions/verify-rite-ls

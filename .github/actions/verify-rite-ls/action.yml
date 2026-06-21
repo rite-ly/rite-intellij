@@ -1,0 +1,26 @@
+name: Verify rite-ls provenance
+description: >-
+  Verify the bundled rite-ls binaries against rite-ly/rite build provenance
+  attestations, using the gh CLI preinstalled on GitHub-hosted runners.
+
+runs:
+  using: composite
+  steps:
+    - name: Verify bundled rite-ls binaries
+      shell: bash
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        found=0
+        while IFS= read -r f; do
+          found=1
+          echo "::group::verify ${f}"
+          gh attestation verify "${f}" \
+            --repo rite-ly/rite \
+            --signer-workflow rite-ly/rite/.github/workflows/release.yml
+          echo "::endgroup::"
+        done < <(find src/main/resources/bin -type f \( -name 'rite-ls' -o -name 'rite-ls.exe' \) | sort)
+        if [ "${found}" -ne 1 ]; then
+          echo "No rite-ls binaries found under src/main/resources/bin/" >&2
+          exit 1
+        fi
