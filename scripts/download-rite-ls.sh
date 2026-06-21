@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 # Download rite-ls binaries into src/main/resources/bin/ from rite-ly/rite GitHub Releases.
 #
+# Provenance is verified separately in CI (see .github/actions/verify-rite-ls),
+# which gates pull requests that touch src/main/resources/bin/.
+#
 # Usage:
 #   ./scripts/download-rite-ls.sh VERSION
 
