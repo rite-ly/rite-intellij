@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "io.ritely"
-version = "0.1.2-SNAPSHOT"
+version = "0.1.2"
 
 kotlin {
     jvmToolchain(21)
@@ -39,6 +39,10 @@ intellijPlatform {
         }
 
         changeNotes = """
+            <h3>0.1.2</h3>
+            <ul>
+              <li>Updated the bundled <code>rite-ls</code> language server to 0.3.1.</li>
+            </ul>
             <h3>0.1.1</h3>
             <ul>
               <li>Semantic token highlighting forwarded from the language server.</li>
