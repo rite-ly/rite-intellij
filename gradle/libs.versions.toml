@@ -1,6 +1,6 @@
 [versions]
 intellijPlatform = "2.17.0"
-kotlin = "2.4.0"
+kotlin = "2.4.10"
 
 [libraries]
 [plugins]
