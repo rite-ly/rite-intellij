@@ -53,7 +53,7 @@ intellijPlatform {
             <ul>
               <li>Language support for <code>*.rite.yaml</code> files via the bundled <code>rite-ls</code> language server.</li>
               <li>Diagnostics, hover, and completions.</li>
-              <li>Bundled binaries for macOS (Apple Silicon and Intel), Linux (x64 and ARM64), and Windows (x64).</li>
+              <li>Bundled binaries for macOS (Apple Silicon), Linux (x64 and ARM64), and Windows (x64). macOS Intel is not supported.</li>
               <li>Settings page for configuring a custom <code>rite-ls</code> binary path.</li>
             </ul>
         """.trimIndent()

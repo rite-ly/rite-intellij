@@ -15,7 +15,6 @@ The language server attaches only to `*.rite.yaml` (or `*.rite.yml`) files, so u
 The plugin bundles the `rite-ls` binary for:
 
 - `darwin-arm64` (macOS Apple Silicon, including Rosetta 2)
-- `darwin-x86_64` (macOS Intel)
 - `linux-arm64`
 - `linux-x86_64`
 - `windows-x86_64`
