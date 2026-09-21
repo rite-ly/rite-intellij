@@ -19,8 +19,8 @@
           <a href="https://ritely.io">ritely.io</a>.
         </p>
         <p>
-          The plugin bundles the <code>rite-ls</code> binary for macOS (Apple Silicon and Intel),
-          Linux (x64 and ARM64), and Windows (x64). A custom binary can be configured under
+          The plugin bundles the <code>rite-ls</code> binary for macOS (Apple Silicon),
+          Linux (x64 and ARM64), and Windows (x64). macOS Intel is not supported. A custom binary can be configured under
           <b>Settings | Languages &amp; Frameworks | Rite</b>.
         </p>
     ]]></description>

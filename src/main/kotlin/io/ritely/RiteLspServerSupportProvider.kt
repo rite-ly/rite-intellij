@@ -69,9 +69,6 @@ class RiteLspServerDescriptor(project: Project) : ProjectWideLspServerDescriptor
             OS.macOS if CpuArch.CURRENT == CpuArch.X86_64 && CpuArch.isEmulated() ->
                 return "/bin/darwin-arm64/rite-ls"
 
-            OS.macOS if CpuArch.CURRENT == CpuArch.X86_64 ->
-                return "/bin/darwin-x86_64/rite-ls"
-
             OS.Windows if CpuArch.CURRENT == CpuArch.X86_64 ->
                 return "/bin/windows-x86_64/rite-ls.exe"
 
