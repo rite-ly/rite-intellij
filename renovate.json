@@ -20,6 +20,12 @@
         "fileFilters": ["src/main/resources/bin/**"],
         "executionMode": "update"
       }
+    },
+    {
+      "description": "Group CI action bumps",
+      "matchManagers": ["github-actions"],
+      "groupName": "github actions",
+      "schedule": ["before 10am on Monday"]
     }
   ]
 }
